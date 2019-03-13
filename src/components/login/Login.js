@@ -5,6 +5,8 @@ import { getDomain } from "../../helpers/getDomain";
 import User from "../shared/models/User";
 import { withRouter } from "react-router-dom";
 import { Button } from "../../views/design/Button";
+import {ErrorCode} from "../shared/ErrorHandler/ErrorHandler"
+
 
 const FormContainer = styled.div`
   margin-top: 2em;
@@ -84,25 +86,33 @@ class Login extends React.Component {
    * If the request is successful, a new user is returned to the front-end and its token is stored in the localStorage.
    */
   login() {
-    fetch(`${getDomain()}/users`, {
-      method: "GET",
+    fetch(`${getDomain()}/login`, {
+      method: "POST",
       headers: {
         "Content-Type": "application/json"
-      }
-    })
-      .then(response => response.json())
+      },
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password
+      })
+    }).then(response => {
+        if( response.status !== 200 ) {
+          throw new Error( ErrorCode(response.status) );
+        }
+        return response.json() })
       .then(returnedUser => {
         const user = new User(returnedUser);
         // store the token into the local storage
         localStorage.setItem("token", user.token);
+        localStorage.setItem("id", user.id);
         // user login successfully worked --> navigate to the route /game in the GameRouter
         this.props.history.push(`/game`);
       })
       .catch(err => {
         if (err.message.match(/Failed to fetch/)) {
           alert("The server cannot be reached. Did you start it?");
-        }  else if () { err.message.match( /username taken/)    //if the username is already taken
-           alert( 'Username is already taken');
+        }  else if (err.message.match( /unauthorized/)) {     //wrong password, do as soon as you know how to
+           alert( 'wrong username or password');
            this.props.history.push( '/login' );
         } else {
           alert(`Something went wrong during the login: ${err.message}`);
@@ -193,7 +203,7 @@ class Login extends React.Component {
                 width="50%"
                 onClick={() => {
                   //this.login();
-                  this.login_test();
+                  this.login();
                 }}
               >
                 Login
@@ -204,7 +214,7 @@ class Login extends React.Component {
                   this.registration();
               }}
               >
-                Registration
+                Register new user
               </Button>
             </ButtonContainer>
           </Form>

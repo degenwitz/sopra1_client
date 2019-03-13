@@ -2,10 +2,10 @@ import React from "react";
 import styled from "styled-components";
 import { BaseContainer } from "../../helpers/layout";
 import { getDomain } from "../../helpers/getDomain";
-import Player from "../../views/Player";
 import { Spinner } from "../../views/design/Spinner";
 import { Button } from "../../views/design/Button";
 import { withRouter } from "react-router-dom";
+import {ErrorCode} from "../shared/ErrorHandler/ErrorHandler";
 
 const Container = styled(BaseContainer)`
   color: white;
@@ -24,6 +24,32 @@ const PlayerContainer = styled.li`
   justify-content: center;
 `;
 
+
+
+
+const PlContainer = styled.div`
+  margin: 6px 0;
+  width: 280px;
+  padding: 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  border: 1px solid #ffffff26;
+`;
+
+const PlUserName = styled.div`
+  font-weight: lighter;
+  margin-left: 5px;
+`;
+
+
+const PlId = styled.div`
+  margin-left: auto;
+  margin-right: 10px;
+  font-weight: bold;
+`;
+
+
 class Game extends React.Component {
   constructor() {
     super();
@@ -34,6 +60,22 @@ class Game extends React.Component {
 
   logout() {
     localStorage.removeItem("token");
+    fetch(`${getDomain()}/logout/`+localStorage.getItem("id"), {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+        .then(response => {
+          if( response.status !== 200 ) {
+            throw new Error( ErrorCode(response.status) );
+          }
+        })
+        .catch(err => {
+          console.log(err);
+          alert("Something went wrong loggin out: " + err);
+        });
+    localStorage.removeItem( "id");
     this.props.history.push("/login");
   }
 
@@ -72,7 +114,12 @@ class Game extends React.Component {
               {this.state.users.map(user => {
                 return (
                   <PlayerContainer key={user.id}>
-                    <Player user={user} />
+                      <PlContainer>
+                          <a href="#" onClick={()=>{this.props.history.push('/playerPage' ); localStorage.setItem("atID", user.id);} } >
+                            {user.username}
+                          </a>
+                          <PlId>Id: {user.id}</PlId>
+                      </PlContainer>
                   </PlayerContainer>
                 );
               })}
@@ -93,3 +140,6 @@ class Game extends React.Component {
 }
 
 export default withRouter(Game);
+/**
+<Player user ={user} />
+ **/

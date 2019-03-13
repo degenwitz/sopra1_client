@@ -1,5 +1,9 @@
 import React from "react";
 import styled from "styled-components";
+import {Button} from "./design/Button";
+import { withRouter } from "react-router-dom";
+
+
 
 const Container = styled.div`
   margin: 6px 0;
@@ -35,13 +39,25 @@ const Id = styled.div`
  * https://reactjs.org/docs/components-and-props.html
  * @FunctionalComponent
  */
-const Player = ({ user }) => {
+const Player = ( user ) => {
+    return (
+        <Container>
+            <UserName>User: {user.username}</UserName>
+            <Id>Id: {user.id}</Id>
+        </Container>
+    );
+};
+
+/**const Player = ( {user} ) => {
   return (
     <Container>
+        <a href="#" onClick={()=>props.history.push('/playerPage' ) } >
+            <UserName> {user.username}</UserName>
+        </a>
       <Name>{user.name}</Name> <UserName>{user.username}</UserName>
       <Id>Id: {user.id}</Id>
     </Container>
   );
-};
+};*/
 
 export default Player;
