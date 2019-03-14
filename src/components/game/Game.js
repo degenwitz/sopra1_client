@@ -67,7 +67,7 @@ class Game extends React.Component {
       }
     })
         .then(response => {
-          if( response.status !== 200 ) {
+          if( response.status < 200 || response.status >=300 ) {
             throw new Error( ErrorCode(response.status) );
           }
         })
