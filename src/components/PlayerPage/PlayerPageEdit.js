@@ -33,7 +33,7 @@ const Form = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 60%;
+  width: 80%;
   height: 375px;
   font-size: 16px;
   font-weight: 300;
@@ -72,7 +72,7 @@ const ButtonContainer = styled.div`
 
 const Container = styled.div`
   margin: 6px 0;
-  width: 280px;
+  width: 860px;
   padding: 10px;
   border-radius: 6px;
   display: flex;
@@ -208,7 +208,7 @@ class PlayerPageEdit extends React.Component {
                     alert( 'wrong username or password');
                     this.props.history.push( '/login' );
                 } else if(err.message.match(/not_found/)){
-                    alert("id not-found");
+                    alert("username already taken or id not-found");
                 } else {
                     alert(`Something went wrong during the login: ${err.message}`);
                 }

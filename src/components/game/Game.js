@@ -10,6 +10,7 @@ import {ErrorCode} from "../shared/ErrorHandler/ErrorHandler";
 const Container = styled(BaseContainer)`
   color: white;
   text-align: center;
+  background: black;
 `;
 
 const Users = styled.ul`

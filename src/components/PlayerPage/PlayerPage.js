@@ -16,7 +16,7 @@ const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-height: 300px;
+  min-height:400px;
   justify-content: center;
 `;
 
@@ -24,7 +24,7 @@ const Form = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 60%;
+  width: 80%;
   height: 375px;
   font-size: 16px;
   font-weight: 300;
@@ -63,7 +63,7 @@ const ButtonContainer = styled.div`
 
 const Container = styled.div`
   margin: 6px 0;
-  width: 280px;
+  width: 860px;
   padding: 10px;
   border-radius: 6px;
   display: flex;
@@ -72,7 +72,8 @@ const Container = styled.div`
 `;
 
 const UserName = styled.div`
-  font-weight: lighter;
+  margin-left: auto;
+  margin-right: 10px;
   margin-left: 5px;
 `;
 
@@ -237,7 +238,6 @@ class PlayerPage extends React.Component {
                             <Id>Id: {this.state.user.id}</Id>
                             <CreationDate>CreationDate: {this.state.user.creationDate} </CreationDate>
                             <Status>Status: {this.state.user.status}</Status>
-
                         </Container>
                     </Form>
                     <ButtonContainer>

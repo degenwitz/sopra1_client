@@ -11,7 +11,7 @@ export const Button = styled.button`
   text-align: center;
   color: rgba(255, 255, 255, 1);
   width: ${props => props.width || null};
-  height: 35px;
+  height: 70px;
   border: none;
   border-radius: 20px;
   cursor: ${props => (props.disabled ? "default" : "pointer")};
